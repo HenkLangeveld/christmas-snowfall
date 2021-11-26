@@ -21,12 +21,18 @@ h1 {
 }
 
 .snow-wrapper {
+  color: white;
+
+  h2 {
+    color: rgb(0, 255, 0);
+    text-align: center;
+  }
+
   .snow__title {
     font-family: "Tangerine", cursive;
-    color: white;
-    font-size: 4rem;
+    font-size: 12vw;
     text-align: center;
-    text-shadow: 0 0 20px rgb(173, 230, 225), 0 0 5px rgb(253, 253, 161);
+    // text-shadow: 0 0 20px rgb(173, 230, 225), 0 0 5px rgb(253, 253, 161);
   }
 
   position: absolute;
@@ -37,6 +43,7 @@ h1 {
   overflow: hidden;
   background: linear-gradient(#123, #111);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   animation: 2s ease-in forwards 15s fadeout;
@@ -58,7 +65,7 @@ h1 {
     right: 0;
     height: 400vh;
     background: linear-gradient(rgba(16, 16, 16, 0), lightgrey, white, white);
-    animation: 15s linear forwards 5s background;
+    animation: 15s linear forwards 3s background;
   }
 
   .snowflake {
@@ -66,9 +73,11 @@ h1 {
     width: var(--size);
     height: var(--size);
     background-color: lightgray;
+    opacity: 0.9;
     border-radius: 50%;
     position: absolute;
-    top: -5vh;
+    // top: -5vh;
+    bottom: calc(100% + 5px);
   }
 
   @keyframes snowfall {
@@ -76,19 +85,95 @@ h1 {
       transform: translate3d(var(--left-ini), 0, 0);
     }
     100% {
-      transform: translate3d(var(--left-end), 110vh, 0);
+      transform: translate3d(var(--left-end), var(--ground), 0);
     }
   }
 
-  @for $i from 1 through 50 {
-    .snowflake:nth-child(#{$i}) {
-      --size: #{random(7) * 0.2}vw;
-      --left-ini: #{random(20) - 10}vw;
-      --left-end: #{random(20) - 10}vw;
-      left: #{random(100)}vw;
-      animation: snowfall #{5 + random(10)}s linear infinite;
-      animation-delay: -#{random(10)}s;
-      filter: blur(abs(random(5) - random(5)) + 0px);
+  .snow--infinite {
+    @for $i from 1 through 30 {
+      .snowflake:nth-child(#{$i}) {
+        --size: #{random(7) * 0.2}vw;
+        --left-ini: #{random(20) - 10}vw;
+        --left-end: #{random(20) - 10}vw;
+        --ground: 100vh;
+        left: #{random(100)}vw;
+        animation: snowfall #{3 + random(5)}s linear infinite;
+        animation-delay: -#{random(10)}s;
+        filter: blur(abs(random(5) - random(5)) + 0px);
+      }
+    }
+  }
+
+  .snow--small {
+    @for $i from 1 through 40 {
+      .snowflake:nth-child(#{$i}) {
+        --size: #{random(7) * 0.2}vw;
+        --left-ini: #{random(20) - 10}vw;
+        --left-end: #{random(20) - 10}vw;
+        --ground: #{100 - random(5)}vh;
+        left: #{random(100)}vw;
+        animation: snowfall #{3 + random(5)}s linear forwards;
+        animation-delay: -#{random(10)}s;
+        filter: blur(abs(random(5) - random(5)) + 0px);
+      }
+    }
+  }
+
+  .snow--medium-small {
+    .snowflake {
+      // background-color: yellow;
+    }
+
+    @for $i from 1 through 40 {
+      .snowflake:nth-child(#{$i}) {
+        --size: #{random(7) * 0.5}vw;
+        --left-ini: #{random(20) - 10}vw;
+        --left-end: #{random(20) - 10}vw;
+        --ground: #{100 - random(10)}vh;
+        left: #{random(100)}vw;
+        animation: snowfall #{3 + random(5)}s linear forwards;
+        animation-delay: #{random(10) - 3}s;
+        filter: blur(abs(random(10) - random(10)) + 0px);
+      }
+    }
+  }
+
+  .snow--medium {
+    .snowflake {
+      // background-color: red;
+    }
+
+    @for $i from 1 through 40 {
+      .snowflake:nth-child(#{$i}) {
+        --size: #{random(7) * 1}vw;
+        --left-ini: #{random(20) - 10}vw;
+        --left-end: #{random(20) - 10}vw;
+        --ground: #{100 - random(15)}vh;
+        left: #{random(100)}vw;
+        animation: snowfall #{3 + random(5)}s linear forwards;
+        animation-delay: #{random(10)}s;
+        filter: blur(abs(random(5) - random(5)) + 0px);
+      }
+    }
+  }
+
+  .snow--medium-large {
+    .snowflake {
+      // background-color: blue;
+    }
+
+    @for $i from 1 through 40 {
+      .snowflake:nth-child(#{$i}) {
+        --size: #{random(7) * 3}vw;
+        --left-ini: #{random(20) - 15}vw;
+        --left-end: #{random(20) - 15}vw;
+        --delay: #{random(10) + 4}s;
+        --ground: #{100 - random(10)}vh;
+        left: #{random(100)}vw;
+        animation: snowfall #{2 + random(5)}s linear forwards;
+        animation-delay: var(--delay);
+        filter: blur(abs(random(5) - random(5)) + 0px);
+      }
     }
   }
 }
@@ -98,9 +183,9 @@ h1 {
     top: 100%;
   }
   50% {
-    top: 0;
+    top: 70%;
   }
-  70% {
+  80% {
     top: -50%;
   }
   100% {
